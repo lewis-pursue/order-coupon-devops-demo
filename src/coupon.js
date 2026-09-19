@@ -1,5 +1,6 @@
 const COUPONS = {
   SAVE10: { type: 'percent', value: 10 },
+  BULK25: { type: 'percent', value: 25, minAmount: 1000 },
 };
 
 export function calculateDiscount(orderAmount, couponCode) {
@@ -8,7 +9,10 @@ export function calculateDiscount(orderAmount, couponCode) {
   }
   const coupon = COUPONS[couponCode];
   if (!coupon) return 0;
-  if (coupon.type === 'percent') return roundMoney(orderAmount * coupon.value / 100);
+  if (coupon.type === 'percent') {
+    if (coupon.minAmount !== undefined && orderAmount < coupon.minAmount) return 0;
+    return roundMoney(orderAmount * coupon.value / 100);
+  }
   return 0;
 }
 
