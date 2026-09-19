@@ -30,3 +30,10 @@ test('BULK25 gives 25 percent off above 1000', () => {
   assert.equal(calculateDiscount(2000, 'BULK25'), 500);
   assert.equal(calculatePayable(2000, 'BULK25'), 1500);
 });
+
+test('Issue #5: BULK25 fractional threshold boundary regression', () => {
+  assert.equal(calculateDiscount(999.99, 'BULK25'), 0);
+  assert.equal(calculatePayable(999.99, 'BULK25'), 999.99);
+  assert.equal(calculateDiscount(1000.01, 'BULK25'), 250);
+  assert.equal(calculatePayable(1000.01, 'BULK25'), 750.01);
+});
