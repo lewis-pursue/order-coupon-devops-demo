@@ -37,3 +37,12 @@ test('Issue #5: BULK25 fractional threshold boundary regression', () => {
   assert.equal(calculateDiscount(1000.01, 'BULK25'), 250);
   assert.equal(calculatePayable(1000.01, 'BULK25'), 750.01);
 });
+
+test('Issue #10: BULK25 acceptance criteria below, at and above 1000', () => {
+  assert.equal(calculateDiscount(500, 'BULK25'), 0);
+  assert.equal(calculatePayable(500, 'BULK25'), 500);
+  assert.equal(calculateDiscount(1000, 'BULK25'), 250);
+  assert.equal(calculatePayable(1000, 'BULK25'), 750);
+  assert.equal(calculateDiscount(1500, 'BULK25'), 375);
+  assert.equal(calculatePayable(1500, 'BULK25'), 1125);
+});
